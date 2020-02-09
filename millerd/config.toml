@@ -1,0 +1,85 @@
+baseURL = "http://millerd.me/"
+title = "milldr"
+
+theme = "hugo-coder"
+
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+canonifyurls = true
+
+pygmentsstyle = "b2"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+disqusShortname = "milldr"
+
+[params]
+    author = "Daniel Miller"
+    description = "Daniel Miller's personal website"
+    keywords = "developer,personal"
+    info = "Full Stack DevOps"
+    avatarurl = "images/avatar.jpg"
+    # footercontent = "Enter a text here."
+
+    dateformat = "January 2, 2006"
+
+    hideCredits = false
+    hideCopyright = false
+    since = 2019
+
+    # Git Commit in Footer, uncomment the line below to enable it.
+    commit = "https://github.com/luizdepra/hugo-coder/tree/"
+
+    rtl = false
+
+    # Specify light/dark colorscheme
+    # Supported values:
+    # "auto" (use preference set by browser)
+    # "dark" (dark background, light foreground)
+    # "light" (light background, dark foreground) (default)
+    colorscheme = "dark"
+
+    # Series see also post count
+    maxSeeAlsoItems = 5
+
+    # Custom CSS
+    custom_css = []
+    
+    # Custom JS
+    custom_js = []
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+
+[[params.social]]
+    name = "Github"
+    icon = "fab fa-github"
+    weight = 1
+    url = "https://github.com/milldr/"
+[[params.social]]
+    name = "LinkedIn"
+    icon = "fab fa-linkedin"
+    weight = 4
+    url = "https://www.linkedin.com/in/daniel-miller-ddd/"
+
+
+[languages]
+    [languages.en]
+        languagename = "English"
+
+        [languages.en.menu]
+
+            [[languages.en.menu.main]]
+            name = "Resume"
+            weight = 1
+            url = "resume/"
+
+            [[languages.en.menu.main]]
+            name = "About"
+            weight = 2
+            url = "about/"
+

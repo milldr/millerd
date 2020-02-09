@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://millerd.me/</loc>
+    <lastmod>2020-02-09T20:01:37+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://millerd.me/resume/</loc>
+    <lastmod>2020-02-09T20:01:37+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://millerd.me/about/</loc>
+    <lastmod>2020-02-09T19:50:09+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://millerd.me/posts/my-first-post/</loc>
+    <lastmod>2020-01-27T01:13:53+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://millerd.me/posts/</loc>
+    <lastmod>2020-01-27T01:13:53+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://millerd.me/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>http://millerd.me/series/</loc>
+  </url>
+  
+  <url>
+    <loc>http://millerd.me/tags/</loc>
+  </url>
+  
+</urlset>
