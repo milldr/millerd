@@ -1,0 +1,36 @@
+version: 1.0
+executors:
+  docker-executor:
+    environment:
+      GIT_ORG: milldr
+      DOCKER_REPO: milldr
+    docker:
+      - image: circleci/python:3
+jobs:
+  put-bucket-policy:
+    executor: docker-executor
+    steps:
+      - checkout
+      - run:
+          name: "Set bucket policy"
+          command: "aws s3api put-bucket-policy --bucket millerd.me --policy file://aws/bucket-policy.json"
+
+  deploy-static-content:
+    executor: docker-executor
+    steps:
+      - checkout
+      - get-tag:
+          directory: millerd
+      - run:
+          name: "Deploy static content to S3 with Hugo"
+          command: |
+            cd ./millerd
+            hugo -D
+            hugo -v deploy --maxDeletes -1
+  test:
+    executor: docker-executor
+    steps:
+      - run:
+          name: "Test url"
+          command: |
+            curl https://millerd.me
