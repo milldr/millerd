@@ -1,14 +1,11 @@
 version: 1.0
 executors:
-  docker-executor:
-    environment:
-      GIT_ORG: milldr
-      DOCKER_REPO: milldr
+  basic-executor:
     docker:
-      - image: circleci/python:3
+      - image: buildpack-deps:trusty
 jobs:
   put-bucket-policy:
-    executor: docker-executor
+    executor: basic-executor
     steps:
       - checkout
       - run:
@@ -16,7 +13,7 @@ jobs:
           command: "aws s3api put-bucket-policy --bucket millerd.me --policy file://aws/bucket-policy.json"
 
   deploy-static-content:
-    executor: docker-executor
+    executor: basic-executor
     steps:
       - checkout
       - get-tag:
@@ -28,7 +25,7 @@ jobs:
             hugo -D
             hugo -v deploy --maxDeletes -1
   test:
-    executor: docker-executor
+    executor: basic-executor
     steps:
       - run:
           name: "Test url"
