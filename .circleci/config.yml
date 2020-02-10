@@ -1,6 +1,7 @@
+workflows:
 version: 1.0
 jobs:
-  put-bucket-policy:
+  build:
     docker:
       - image: buildpack-deps:trusty
     steps:
@@ -8,12 +9,6 @@ jobs:
       - run:
           name: "Set bucket policy"
           command: "aws s3api put-bucket-policy --bucket millerd.me --policy file://aws/bucket-policy.json"
-
-  deploy-static-content:
-    docker:
-      - image: buildpack-deps:trusty
-    steps:
-      - checkout
       - get-tag:
           directory: millerd
       - run:
