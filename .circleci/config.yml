@@ -1,11 +1,8 @@
 version: 1.0
-executors:
-  basic-executor:
-    docker:
-      - image: buildpack-deps:trusty
 jobs:
   put-bucket-policy:
-    executor: basic-executor
+    docker:
+      - image: buildpack-deps:trusty
     steps:
       - checkout
       - run:
@@ -13,7 +10,8 @@ jobs:
           command: "aws s3api put-bucket-policy --bucket millerd.me --policy file://aws/bucket-policy.json"
 
   deploy-static-content:
-    executor: basic-executor
+    docker:
+      - image: buildpack-deps:trusty
     steps:
       - checkout
       - get-tag:
@@ -25,7 +23,8 @@ jobs:
             hugo -D
             hugo -v deploy --maxDeletes -1
   test:
-    executor: basic-executor
+    docker:
+      - image: buildpack-deps:trusty
     steps:
       - run:
           name: "Test url"
