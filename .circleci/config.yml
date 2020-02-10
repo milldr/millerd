@@ -3,9 +3,12 @@ version: 1.0
 jobs:
   build:
     docker:
-      - image: buildpack-deps:trusty
+      - image: milldr/amazon-brew
     steps:
       - checkout
+      - run:
+          name: "Install Hugo"
+          command: "brew install hugo"
       - run:
           name: "Set bucket policy"
           command: "aws s3api put-bucket-policy --bucket millerd.me --policy file://aws/bucket-policy.json"
