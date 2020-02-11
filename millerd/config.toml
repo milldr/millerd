@@ -76,7 +76,7 @@ disqusShortname = "milldr"
             [[languages.en.menu.main]]
             name = "Resume"
             weight = 1
-            url = "resume/resume.html"
+            url = "resume/index.html"
 
             [[languages.en.menu.main]]
             name = "About"
