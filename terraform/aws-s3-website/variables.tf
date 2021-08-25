@@ -26,3 +26,7 @@ variable "name" {
   description = "Solution name, e.g. 'app' or 'jenkins'"
 }
 
+variable "parent_zone_name" {
+  description = "The name of the parent Route53 zone to use for the distribution."
+  type        = string
+}
