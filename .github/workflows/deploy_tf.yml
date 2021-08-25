@@ -1,4 +1,4 @@
-name: Apply terraform plan
+name: Apply terraform
 
 on:
   push:
