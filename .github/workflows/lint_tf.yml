@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'terraform/**'
+      - '.github/workflows/lint_tf.yml'
 
 jobs:
   generate-matrix:
