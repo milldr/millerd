@@ -1,0 +1,51 @@
+name: Apply terraform plan
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+      - '.github/workflows/build_app.yml'
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: 'us-west-2'
+  TERRAFORM_CONFIG: terraform/aws-s3-website
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate terraform configuration
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: terraform validate
+        uses: dflook/terraform-validate@v1
+        with:
+          path: ${{ env.TERRAFORM_CONFIG }}
+
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint terraform configuration
+    needs: validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: terraform fmt
+        uses: dflook/terraform-fmt-check@v1.12.0
+        with:
+          path: ${{ env.TERRAFORM_CONFIG }}
+
+  apply:
+    runs-on: ubuntu-latest
+    name: Apply terraform plan
+    needs: lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        with:
+          path: ${{ env.TERRAFORM_CONFIG }}
