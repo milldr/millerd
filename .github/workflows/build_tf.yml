@@ -1,0 +1,78 @@
+name: Build terraform
+
+on:
+  pull_request:
+    paths:
+      - 'app/**'
+      - '.github/workflows/build_app.yml'
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: 'us-west-2'
+  TERRAFORM_CONFIG: terraform/aws-s3-website
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    strategy:
+      fail-fast: false
+      matrix:
+        path: ${{ fromJson(needs.generate-matrix.outputs.paths) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: terraform fmt
+        uses: dflook/terraform-fmt-check@v1.12.0
+        with:
+          path: ${{ env.TERRAFORM_CONFIG }}
+
+  auto-fmt:
+    runs-on: ubuntu-latest
+    name: Auto format
+    needs: lint
+    if: ${{ failure() }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: terraform fmt
+        uses: dflook/terraform-fmt@v1
+        with:
+          path: ${{ env.TERRAFORM_CONFIG }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        id: cpr
+        with:
+          commit-message: format
+          title: Reformat files
+          body: Update code to linted standard, ie `terraform fmt`
+          branch: automated-fmt
+          branch-suffix: random
+          base: ${{ github.head_ref }}
+      - name: Comment on PR
+        uses: unsplash/comment-on-pr@v1.2.0
+        if: ${{ format('{0}', steps.cpr.outputs.pull-request-url) != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: |
+            **Auto Formatter**
+            ----
+
+            Please merge this PR into your branch
+
+            (${{ steps.cpr.outputs.pull-request-url }})
+
+
+  plan:
+    runs-on: ubuntu-latest
+    name: Create a plan for an example terraform configuration
+    needs: lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: terraform plan
+        uses: dflook/terraform-plan@v1
+        with:
+          path: ${{ env.TERRAFORM_CONFIG }}
