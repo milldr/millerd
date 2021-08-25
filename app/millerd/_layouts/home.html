@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  {{ content }}
+
+  <h1 class="header">{{ page.header }}</h1>
+  <h2 class="subheader">{{ page.subheader }}</h2>
+  <p class="description">{{ page.description }}</p>
+
+  <div class="footer-social-icons">
+    <ul class="social-icons">
+  {% for social in page.socials %}
+  <li><a href="{{ social.link }}" class="social-icon"><i class="fa fa-{{ social.name }}"></i></a></li>
+  {% endfor %}
+    </ul>
+  </div>
+
+</div>

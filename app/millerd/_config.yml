@@ -1,0 +1,12 @@
+title: milldr
+url: "millerd.me" 
+
+sass:
+  load_paths:
+    - _sass
+
+theme: minima
+
+exclude: 
+  - README.md
+

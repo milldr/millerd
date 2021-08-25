@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {%- include head.html -%}
+  <head>
+    <link rel="stylesheet" href="{{'/assets/main.css' | prepend: site.baseurl}}">
+  </head>
+
+  <body>
+    <main class="h-100 d-flex justify-content-center align-items-center background" aria-label="Content">
+      <div class="content">
+        {{ content }}
+      </div>
+    </main>
+
+  </body>
+</html>

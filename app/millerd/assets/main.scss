@@ -1,0 +1,103 @@
+---
+---
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Courier+Prime&family=Major+Mono+Display&family=Montserrat&display=swap');
+$background-color: #322f30;
+//$font-main: 'Major Mono Display', monospace;
+$font-main: 'Bungee Hairline', cursive;
+// $font-secondary: 'Montserrat', sans-serif;
+$font-secondary: 'Courier Prime', monospace;
+
+
+html,
+body {
+  height: 100%;
+}
+
+.background {
+  font-family: $font-secondary;
+  color: #FFF;
+  background: #322f30;
+  -webkit-font-smoothing: antialiased;
+}
+
+.content {
+  font-size: 12;
+  color: white;
+}
+
+.header {
+  font-family: $font-main;
+  font-size: 2.5em;
+}
+
+.subheader {
+  font-family: $font-secondary;
+  font-size: 1.8em;
+}
+
+.description {
+  font-size: 1.2em;
+}
+
+html, body {
+}
+a {
+    text-decoration: none;
+    color: #fff;
+}
+p > a:hover{
+    color: #d9d9d9;
+    text-decoration:  underline;
+}
+ul {
+    padding:0;
+    list-style: none;
+}
+.footer-social-icons {
+    width: 350px;
+    display:block;
+    margin: 0 auto;
+}
+ul.social-icons {
+    padding: 0;
+    margin-top: 10px;
+}
+.social-icons {
+    font-size: 2em;
+  }
+.social-icons li {
+    vertical-align: top;
+    display: inline;
+    height: 100px;
+}
+.social-icons a {
+    color: #fff;
+    text-decoration: none;
+}
+.fa-linkedin {
+    -moz-transition:.5s;
+    -ms-transition:.5s;
+    -o-transition:.5s;
+    -webkit-transition:.5s;
+    background-color: $background-color;
+    border-radius: 50%;
+    padding:10px 14px;
+    transition: .5s;
+}
+.fa-linkedin:hover {
+    background-color: #0073a4;
+}
+.fa-github {
+    -moz-transition:.5s;
+    -ms-transition:.5s;
+    -o-transition:.5s;
+    -webkit-transition:.5s;
+    background-color: $background-color;
+    border-radius: 50%;
+    padding:10px 14px;
+    transition: .5s;
+}
+.fa-github:hover {
+    background-color: #5a32a3;
+}
