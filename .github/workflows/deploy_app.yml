@@ -1,0 +1,36 @@
+name: Build
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+    paths:
+      - 'app/**'
+      - '.github/workflows/build_app.yml'
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: 'us-west-2'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - name: "Build Site"
+      run: |
+        cd app/millerd
+        bundle exec jekyll build
+      env:
+        JEKYLL_ENV: production
+    - name: "Deploy to AWS S3"
+      run: |
+        aws s3 sync ./_site/ s3://${{ secrets.AWS_S3_BUCKET_NAME }}
+      # - name: "Create AWS Cloudfront Invalidation"
+      #   run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
