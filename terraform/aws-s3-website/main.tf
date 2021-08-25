@@ -2,7 +2,7 @@ module "s3_website" {
   source  = "cloudposse/s3-website/aws"
   version = "v0.17.1"
 
-  name = var.name
+  name                    = var.name
   hostname                = var.hostname
   force_destroy           = var.force_destroy
   encryption_enabled      = var.encryption_enabled
@@ -13,7 +13,7 @@ module "s3_website" {
 }
 
 module "cdn" {
-  source = "cloudposse/cloudfront-s3-cdn/aws"
+  source  = "cloudposse/cloudfront-s3-cdn/aws"
   version = "v0.75.0"
 
   aliases           = [var.hostname]
@@ -30,7 +30,7 @@ module "cdn" {
   origin_groups = {
     primary_origin_id  = null # will get translated to the origin id of the origin created by this module.
     failover_origin_id = module.s3_bucket.bucket_id
-    failover_criteria  = [
+    failover_criteria = [
       403,
       404,
       500,
