@@ -1,7 +1,14 @@
 provider "aws" {
   profile = "milldr"
-  region  = "us-west-2"
+  region  = var.app_region
 }
+
+provider "aws" {
+  alias   = "acm_region"
+  profile = "milldr"
+  region  = var.acm_region
+}
+
 
 terraform {
   backend "s3" {
