@@ -1,10 +1,9 @@
-name: Build
+name: Build App
+
 on:
-  push:
+  pull_request:
     branches:
-      - '**'
-    tags-ignore:
-      - '**'
+      - main
     paths:
       - 'app/**'
       - '.github/workflows/build_app.yml'
