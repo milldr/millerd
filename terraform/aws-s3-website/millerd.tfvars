@@ -1,3 +1,3 @@
-name     = "millerd"
-hostname = "millerd.me"
+name             = "millerd"
+hostname         = "millerd.me"
 parent_zone_name = "millerd.me"
