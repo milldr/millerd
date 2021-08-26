@@ -7,8 +7,8 @@ on:
     tags-ignore:
       - '**'
     paths:
-      - 'app/**'
-      - '.github/workflows/build_app.yml'
+      - 'terraform/**'
+      - '.github/workflows/deploy_tf.yml'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
