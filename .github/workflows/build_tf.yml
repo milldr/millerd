@@ -67,7 +67,7 @@ jobs:
 
   plan:
     runs-on: ubuntu-latest
-    name: Create a plan for an example terraform configuration
+    name: terraform plan
     needs: lint
     steps:
       - name: Checkout

@@ -42,7 +42,7 @@ jobs:
 
   apply:
     runs-on: ubuntu-latest
-    name: Apply terraform plan
+    name: terraform apply
     needs: lint
     steps:
       - name: Checkout
