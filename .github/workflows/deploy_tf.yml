@@ -1,18 +1,21 @@
-name: Apply terraform plan
+name: Apply terraform
 
 on:
   push:
     branches:
       - main
+    tags-ignore:
+      - '**'
     paths:
-      - 'app/**'
-      - '.github/workflows/build_app.yml'
+      - 'terraform/**'
+      - '.github/workflows/deploy_tf.yml'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: 'us-west-2'
   TERRAFORM_CONFIG: terraform/aws-s3-website
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   validate:
@@ -40,7 +43,7 @@ jobs:
 
   apply:
     runs-on: ubuntu-latest
-    name: Apply terraform plan
+    name: terraform apply
     needs: lint
     steps:
       - name: Checkout
@@ -49,3 +52,4 @@ jobs:
         uses: dflook/terraform-apply@v1
         with:
           path: ${{ env.TERRAFORM_CONFIG }}
+          var_file: "${{ env.TERRAFORM_CONFIG }}/millerd.tfvars"

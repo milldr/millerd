@@ -2,24 +2,25 @@ name: Build terraform
 
 on:
   pull_request:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
     paths:
-      - 'app/**'
-      - '.github/workflows/build_app.yml'
+      - 'terraform/**'
+      - '.github/workflows/build_tf.yml'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: 'us-west-2'
   TERRAFORM_CONFIG: terraform/aws-s3-website
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     name: Lint
-    strategy:
-      fail-fast: false
-      matrix:
-        path: ${{ fromJson(needs.generate-matrix.outputs.paths) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -53,8 +54,6 @@ jobs:
       - name: Comment on PR
         uses: unsplash/comment-on-pr@v1.2.0
         if: ${{ format('{0}', steps.cpr.outputs.pull-request-url) != '' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: |
             **Auto Formatter**
@@ -67,7 +66,7 @@ jobs:
 
   plan:
     runs-on: ubuntu-latest
-    name: Create a plan for an example terraform configuration
+    name: terraform plan
     needs: lint
     steps:
       - name: Checkout
@@ -76,3 +75,4 @@ jobs:
         uses: dflook/terraform-plan@v1
         with:
           path: ${{ env.TERRAFORM_CONFIG }}
+          var_file: "${{ env.TERRAFORM_CONFIG }}/millerd.tfvars"
