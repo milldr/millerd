@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags-ignore:
+      - '**'
     paths:
       - 'app/**'
       - '.github/workflows/build_app.yml'

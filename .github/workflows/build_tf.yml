@@ -2,6 +2,10 @@ name: Build terraform
 
 on:
   pull_request:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
     paths:
       - 'app/**'
       - '.github/workflows/build_app.yml'
