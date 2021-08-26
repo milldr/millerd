@@ -51,3 +51,4 @@ jobs:
         uses: dflook/terraform-apply@v1
         with:
           path: ${{ env.TERRAFORM_CONFIG }}
+          var_file: "${{ env.TERRAFORM_CONFIG }}/millerd.tfvars"

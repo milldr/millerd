@@ -76,3 +76,4 @@ jobs:
         uses: dflook/terraform-plan@v1
         with:
           path: ${{ env.TERRAFORM_CONFIG }}
+          var_file: "${{ env.TERRAFORM_CONFIG }}/millerd.tfvars"
