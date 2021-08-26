@@ -15,6 +15,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: 'us-west-2'
   TERRAFORM_CONFIG: terraform/aws-s3-website
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   lint:
@@ -53,8 +54,6 @@ jobs:
       - name: Comment on PR
         uses: unsplash/comment-on-pr@v1.2.0
         if: ${{ format('{0}', steps.cpr.outputs.pull-request-url) != '' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: |
             **Auto Formatter**
