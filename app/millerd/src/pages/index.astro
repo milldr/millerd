@@ -1,0 +1,292 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Dan Miller">
+  <main>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="terminal-title">milldr@home ~ </span>
+      </div>
+      <div class="terminal-body" id="terminal-body"></div>
+    </div>
+    <div class="socials">
+      <a href="https://github.com/milldr" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fa-brands fa-github"></i>
+        <span class="social-label">GitHub</span>
+      </a>
+      <a href="https://www.linkedin.com/in/daniel-miller-ddd/" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fa-brands fa-linkedin"></i>
+        <span class="social-label">LinkedIn</span>
+      </a>
+      <a href="https://calendly.com/milldr" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fa-solid fa-calendar"></i>
+        <span class="social-label">Book</span>
+      </a>
+    </div>
+  </main>
+</Layout>
+
+<script is:inline>
+  (function () {
+    var body = document.getElementById("terminal-body");
+    var blurb = "DevOps engineer building automation";
+    var blurb2 = "that lets teams ship fast.";
+    var infoLines = [
+      { key: "role",  val: "DevOps Engineer @ Cloud Posse" },
+      { key: "aws",   val: "Solutions Architect (certified)" },
+      { key: "gh",    val: "milldr" },
+      { key: "loc",   val: "Cincinnati, OH" },
+    ];
+
+    function sleep(ms) {
+      return new Promise(function (r) { setTimeout(r, ms); });
+    }
+
+    function makePrompt() {
+      var el = document.createElement("div");
+      el.className = "line";
+      el.innerHTML =
+        '<span class="user">guest@milldr</span>' +
+        '<span class="sep">:</span>' +
+        '<span class="path">~</span>' +
+        '<span class="dollar">$</span> ' +
+        '<span class="cmd"></span>' +
+        '<span class="cursor">&#9608;</span>';
+      return el;
+    }
+
+    function typeText(el, text, speed) {
+      return new Promise(function (resolve) {
+        var i = 0;
+        var interval = setInterval(function () {
+          el.textContent += text[i];
+          i++;
+          if (i >= text.length) {
+            clearInterval(interval);
+            resolve();
+          }
+        }, speed);
+      });
+    }
+
+    async function run() {
+      while (true) {
+        body.innerHTML = "";
+
+        var line = makePrompt();
+        body.appendChild(line);
+        var cmd = line.querySelector(".cmd");
+        var cursor = line.querySelector(".cursor");
+
+        await sleep(1500);
+        await typeText(cmd, "whoami", 80);
+        cursor.style.display = "none";
+        await sleep(300);
+
+        var info = document.createElement("div");
+        info.className = "info";
+
+        var headerEl = document.createElement("div");
+        headerEl.className = "info-header";
+        headerEl.textContent = "Daniel Miller";
+        info.appendChild(headerEl);
+
+        var sepEl = document.createElement("div");
+        sepEl.className = "sep-line";
+        sepEl.textContent = "-------------------";
+        info.appendChild(sepEl);
+
+        var blurbEl = document.createElement("div");
+        blurbEl.className = "info-blurb";
+        blurbEl.textContent = blurb;
+        info.appendChild(blurbEl);
+
+        var blurbEl2 = document.createElement("div");
+        blurbEl2.className = "info-blurb";
+        blurbEl2.textContent = blurb2;
+        info.appendChild(blurbEl2);
+
+        var spacer = document.createElement("div");
+        spacer.className = "info-spacer";
+        info.appendChild(spacer);
+
+        body.appendChild(info);
+
+        for (var j = 0; j < infoLines.length; j++) {
+          await sleep(60);
+          var row = document.createElement("div");
+          row.className = "info-line";
+          row.innerHTML = '<span class="info-key">' + infoLines[j].key + '</span><span class="sep">: </span>' + infoLines[j].val;
+          info.appendChild(row);
+        }
+
+        var gap = document.createElement("div");
+        gap.style.height = "1.5rem";
+        body.appendChild(gap);
+
+        var idle = makePrompt();
+        body.appendChild(idle);
+
+        await sleep(15000);
+
+        var idleCursor = idle.querySelector(".cursor");
+        idleCursor.style.display = "none";
+        await typeText(idle.querySelector(".cmd"), "clear", 80);
+        await sleep(300);
+        body.style.opacity = "0";
+        await sleep(100);
+        body.innerHTML = "";
+        body.style.opacity = "1";
+      }
+    }
+
+    run();
+  })();
+</script>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+
+  .terminal {
+    width: 720px;
+    max-width: 100%;
+    border: 1px solid #44475a;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(189, 147, 249, 0.06);
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    background: #21222c;
+    border-bottom: 1px solid #44475a;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #febc2e; }
+  .dot.green { background: #28c840; }
+
+  .terminal-title {
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    color: #6272a4;
+  }
+
+  .terminal-body {
+    padding: 1.5rem;
+    background: #282a36;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    overflow: hidden;
+    transition: opacity 0.1s;
+  }
+
+  .socials {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .social-link {
+    width: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.4rem;
+    color: #6272a4;
+    transition: color 0.2s;
+  }
+
+  .social-label {
+    font-size: 0.65rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .social-link:hover .social-label { opacity: 1; }
+  .social-link:hover .fa-github { color: #f8f8f2; }
+  .social-link:hover .fa-linkedin { color: #8be9fd; }
+  .social-link:hover .fa-calendar { color: #50fa7b; }
+
+  @media (max-width: 768px) {
+    .terminal-body {
+      height: 250px;
+      padding: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    main { padding: 1rem; }
+    .terminal-body { height: 200px; }
+  }
+</style>
+
+<style is:global>
+  .line { font-size: 0.9rem; }
+
+  .user { color: #50fa7b; }
+  .sep { color: #6272a4; }
+  .path { color: #bd93f9; }
+  .dollar { color: #6272a4; }
+  .cmd { color: #f8f8f2; }
+
+  .cursor {
+    color: #f8f8f2;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .info {
+    margin-top: 0.75rem;
+    margin-left: 1rem;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .info-header {
+    font-weight: 700;
+    color: #50fa7b;
+  }
+
+  .sep-line { color: #44475a; }
+  .info-blurb { color: #6272a4; }
+  .info-spacer { height: 1rem; }
+
+  .info-key {
+    color: #8be9fd;
+    display: inline-block;
+    width: 9ch;
+    text-align: right;
+  }
+
+  .info-line { color: #f8f8f2; }
+  .info-line .sep { color: #6272a4; }
+</style>

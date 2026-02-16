@@ -19,22 +19,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
-        working-directory: app/millerd
-        ruby-version: 2.7
-        bundler-cache: true
-    - name: "Build Site"
-      run: |
-        cd app/millerd
-        bundle exec jekyll build
-      env:
-        JEKYLL_ENV: production
-    - name: "Deploy to AWS S3"
-      run: |
-        cd app/millerd
-        aws s3 sync ./_site/ s3://${{ env.AWS_S3_BUCKET_NAME }}
-    - name: "Create AWS Cloudfront Invalidation"
+        node-version: 22
+        cache: npm
+        cache-dependency-path: app/millerd/package-lock.json
+    - name: Install dependencies
+      run: npm ci
+      working-directory: app/millerd
+    - name: Build site
+      run: npm run build
+      working-directory: app/millerd
+    - name: Deploy to AWS S3
+      run: aws s3 sync ./dist/ s3://${{ env.AWS_S3_BUCKET_NAME }}
+      working-directory: app/millerd
+    - name: Create AWS Cloudfront Invalidation
       run: aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
