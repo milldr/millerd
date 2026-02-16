@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="404 — Not Found">
+  <main>
+    <h1>404</h1>
+    <p>Page not found.</p>
+    <a href="/">Go home</a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 1rem;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-family: "Courier Prime", monospace;
+    font-size: 4rem;
+    color: #ffffff;
+  }
+
+  p {
+    color: #8b8fa3;
+    font-size: 1.125rem;
+  }
+
+  a {
+    color: #7b7fb0;
+    border-bottom: 1px solid #7b7fb0;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+
+  a:hover {
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+</style>
