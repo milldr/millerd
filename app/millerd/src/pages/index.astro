@@ -233,14 +233,19 @@ import Layout from "../layouts/Layout.astro";
 
   @media (max-width: 768px) {
     .terminal-body {
-      height: 250px;
+      height: 320px;
       padding: 1rem;
     }
   }
 
   @media (max-width: 480px) {
-    main { padding: 1rem; }
-    .terminal-body { height: 200px; }
+    main { padding: 0.75rem; }
+    .terminal-body {
+      height: 260px;
+      padding: 0.75rem;
+    }
+    .social-link { font-size: 1.2rem; }
+    .social-label { opacity: 1; }
   }
 </style>
 
@@ -269,6 +274,8 @@ import Layout from "../layouts/Layout.astro";
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .info-header {
@@ -289,4 +296,15 @@ import Layout from "../layouts/Layout.astro";
 
   .info-line { color: #f8f8f2; }
   .info-line .sep { color: #6272a4; }
+
+  @media (max-width: 480px) {
+    .line { font-size: 0.75rem; }
+    .info {
+      margin-left: 0;
+      font-size: 0.75rem;
+    }
+    .info-key {
+      width: 5ch;
+    }
+  }
 </style>
