@@ -33,10 +33,16 @@ import Layout from "../layouts/Layout.astro";
 <script is:inline>
   (function () {
     var body = document.getElementById("terminal-body");
-    var blurb = "DevOps engineer building automation";
-    var blurb2 = "that lets teams ship fast.";
+    var blurbs = [
+      ["Building cloud agents", "as a founding engineer at Tembo."],
+      ["Optimizing cloud sandboxes", "for fast, reliable agent workflows."],
+      ["Building cloud development environments", "that turn ideas into running software."],
+      ["Cloud infrastructure expert", "focused on developer experience."],
+      ["Formerly Cloud Posse", "now building the future at Tembo."],
+    ];
+    var blurbIndex = 0;
     var infoLines = [
-      { key: "role",  val: "DevOps Engineer @ Cloud Posse" },
+      { key: "role",  val: "Founding Engineer @ Tembo" },
       { key: "aws",   val: "Solutions Architect (certified)" },
       { key: "gh",    val: "milldr" },
       { key: "loc",   val: "Cincinnati, OH" },
@@ -76,6 +82,8 @@ import Layout from "../layouts/Layout.astro";
     async function run() {
       while (true) {
         body.innerHTML = "";
+        var blurb = blurbs[blurbIndex];
+        blurbIndex = (blurbIndex + 1) % blurbs.length;
 
         var line = makePrompt();
         body.appendChild(line);
@@ -102,12 +110,12 @@ import Layout from "../layouts/Layout.astro";
 
         var blurbEl = document.createElement("div");
         blurbEl.className = "info-blurb";
-        blurbEl.textContent = blurb;
+        blurbEl.textContent = blurb[0];
         info.appendChild(blurbEl);
 
         var blurbEl2 = document.createElement("div");
         blurbEl2.className = "info-blurb";
-        blurbEl2.textContent = blurb2;
+        blurbEl2.textContent = blurb[1];
         info.appendChild(blurbEl2);
 
         var spacer = document.createElement("div");
